@@ -1,0 +1,20 @@
+name: Build APK
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Build Android APK
+      uses: hyOzd/android-build-action@v1.4.3
+      with:
+        buildozer_version: master
+        command: buildozer -v android debug
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: package
+        path: bin/*.apk
